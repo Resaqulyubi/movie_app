@@ -141,8 +141,8 @@ class TvShowDetailScreen extends StatelessWidget {
                       data: show['summary'] ?? show['overview'] ?? '',
                       style: {
                         "body": Style(
-                          margin: EdgeInsets.zero,
-                          padding: EdgeInsets.zero,
+                          margin: Margins.zero,
+                          padding: HtmlPaddings.zero,
                           fontSize: FontSize(16),
                           color: Theme.of(context).colorScheme.onBackground,
                         ),
