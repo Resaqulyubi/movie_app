@@ -65,10 +65,10 @@ dependencies:
 
 ## Technical Specifications
 
-- Dart SDK: >=3.2.3 <4.0.0
+- Dart SDK: >=3.6.0 <4.0.0
 - Flutter: Latest stable version
 - Dependencies:
-  - http: ^1.1.0
+  - http: ^1.2.0
   - sqflite: ^2.3.0
   - provider: ^6.1.1
   - flutter_html: ^3.0.0-beta.2
