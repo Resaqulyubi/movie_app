@@ -3,12 +3,13 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'screens/login_screen.dart';
 import 'screens/movie_list_screen.dart';
+import 'database/sqlite_init.dart';
 
-void main() {
-  // Initialize FFI
-  sqfliteFfiInit();
-  // Change the default factory
-  databaseFactory = databaseFactoryFfi;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize SQLite
+  await SQLiteInit.initialize();
   
   runApp(const MyApp());
 }

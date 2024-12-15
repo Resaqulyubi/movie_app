@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'dart:io';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
@@ -17,17 +18,27 @@ class DatabaseHelper {
   }
 
   Future<Database> _initDatabase() async {
-    // Make sure the directory exists
-    String path = join(await databaseFactoryFfi.getDatabasesPath(), 'movie_app.db');
+    // Get the database path
+    String path = join(await getDatabasesPath(), 'movie_app.db');
     
     // Open/create the database at a given path
-    return await databaseFactoryFfi.openDatabase(
-      path,
-      options: OpenDatabaseOptions(
+    if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
+      // Use FFI for desktop platforms
+      return await databaseFactoryFfi.openDatabase(
+        path,
+        options: OpenDatabaseOptions(
+          version: 1,
+          onCreate: _onCreate,
+        ),
+      );
+    } else {
+      // Use default factory for mobile platforms
+      return await openDatabase(
+        path,
         version: 1,
         onCreate: _onCreate,
-      ),
-    );
+      );
+    }
   }
 
   Future<void> _onCreate(Database db, int version) async {
