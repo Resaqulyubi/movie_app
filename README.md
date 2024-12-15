@@ -109,6 +109,22 @@ The app uses a platform-specific approach for database operations:
 - Updated dependencies to latest stable versions
 - Enhanced error handling and user feedback
 
+## Development Setup
+
+### Prerequisites
+- Flutter SDK
+- Java Development Kit (JDK) 17
+  - Ensure JDK 17 is installed in your system
+  - Configure `gradle.properties` with the correct Java home path:
+    ```properties
+    org.gradle.java.home=C:/Program Files/Java/jdk-17
+    ```
+
+### Building the App
+1. Clone the repository
+2. Run `flutter pub get` to install dependencies
+3. Run `flutter build apk` for Android or `flutter build ios` for iOS
+
 ## Getting Started
 
 1. Clone the repository
