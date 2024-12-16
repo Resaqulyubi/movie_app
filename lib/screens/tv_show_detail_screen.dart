@@ -32,19 +32,21 @@ class TvShowDetailScreen extends StatelessWidget {
             if (show['image'] != null || show['poster_path'] != null)
               Hero(
                 tag: 'show-image-${show['id']}',
-                child: Image.network(
-                  show['image']?['original'] ?? show['poster_path'] ?? '',
+                child: SizedBox(
                   width: double.infinity,
                   height: 300,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      width: double.infinity,
-                      height: 300,
-                      color: Colors.grey[300],
-                      child: const Icon(Icons.error),
-                    );
-                  },
+                  child: Image.network(
+                    show['image']?['original'] ?? show['poster_path'] ?? '',
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        width: double.infinity,
+                        height: 300,
+                        color: Colors.grey[300],
+                        child: const Icon(Icons.error),
+                      );
+                    },
+                  ),
                 ),
               ),
             Padding(
@@ -71,6 +73,7 @@ class TvShowDetailScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               const Icon(Icons.star, color: Colors.white, size: 16),
                               const SizedBox(width: 4),

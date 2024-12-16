@@ -64,6 +64,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
   Widget _buildGridItem(Map<String, dynamic> movie) {
     return Card(
       elevation: 2,
+      clipBehavior: Clip.hardEdge,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
@@ -77,50 +78,50 @@ class _MovieListScreenState extends State<MovieListScreen> {
           );
         },
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
-              child: AspectRatio(
-                aspectRatio: 0.7,
-                child: movie['poster_path'] != null
-                    ? Hero(
-                        tag: 'show-image-${movie['id']}',
-                        child: Image.network(
-                          movie['poster_path'] ?? '',
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              color: Colors.grey[300],
-                              child: const Icon(Icons.error),
-                            );
-                          },
-                        ),
-                      )
-                    : Container(
-                        color: Colors.grey[300],
-                        child: const Icon(Icons.movie),
+            AspectRatio(
+              aspectRatio: 0.9,
+              child: movie['poster_path'] != null
+                  ? Hero(
+                      tag: 'show-image-${movie['id']}',
+                      child: Image.network(
+                        movie['poster_path'] ?? '',
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: Colors.grey[300],
+                            child: const Icon(Icons.error),
+                          );
+                        },
                       ),
-              ),
+                    )
+                  : Container(
+                      color: Colors.grey[300],
+                      child: const Icon(Icons.movie),
+                    ),
             ),
             Expanded(
-              child: Padding(
+              child: Container(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      movie['title'] ?? 'Unknown',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                    Flexible(
+                      child: Text(
+                        movie['title'] ?? 'Unknown',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                     ),
-                    const Spacer(),
-                    if (movie['vote_average'] != null)
+                    if (movie['vote_average'] != null) ...[
+                      const SizedBox(height: 4),
                       Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           const Icon(Icons.star, size: 14, color: Colors.amber),
                           const SizedBox(width: 4),
@@ -133,6 +134,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                           ),
                         ],
                       ),
+                    ],
                   ],
                 ),
               ),
@@ -311,8 +313,11 @@ class _MovieListScreenState extends State<MovieListScreen> {
                             padding: const EdgeInsets.all(8),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: MediaQuery.of(context).size.width > 600 ? 4 : 3,
-                              childAspectRatio: 0.55,
+                              crossAxisCount:
+                                  MediaQuery.of(context).size.width > 600
+                                      ? 4
+                                      : 2,
+                              childAspectRatio: 0.7,
                               crossAxisSpacing: 8,
                               mainAxisSpacing: 8,
                             ),
